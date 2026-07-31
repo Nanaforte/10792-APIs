@@ -1,0 +1,49 @@
+### ==========================================
+### 1. AUTENTICAÇÃO E JWT
+### ==========================================
+
+# @name login
+POST https://localhost:7207/api/Auth/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Guardar o Token JWT para as requisições seguintes
+//@authToken = {{login.response.body.token}}
+
+
+### ==========================================
+### 2. LIVROS E POLLY CACHE
+### ==========================================
+
+### Obter todos os livros do catálogo
+GET https://localhost:7207/api/Books
+Accept: application/json
+
+### Obter Livro ID 1 (Testa Polly Cache - Executar 2x seguidas)
+GET https://localhost:7207/api/Books/1
+Accept: application/json
+
+
+### ==========================================
+### 3. INTEGRAÇÃO COM MOUNTEBANK (PROTEGIDO POR JWT)
+### ==========================================
+
+### Consulta de Inventário no Mountebank
+GET https://localhost:7207/api/Books/1/stock-externo
+Authorization: Bearer              ###COLOCAR O TOKEN RECEBI NO PONTO 1
+Accept: application/json
+
+### Processar Pagamento de Compra no Mountebank
+POST https://localhost:7207/api/Books/comprar
+Authorization: Bearer               ###COLOCAR O TOKEN RECEBI NO PONTO 1
+Content-Type: application/json
+
+{
+  "bookId": 1,
+  "valor": 25.00,
+  "metodoPagamento": "CartaoCredito"
+}

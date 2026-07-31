@@ -1,0 +1,88 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{53EED3F4-6845-88EE-D1E4-C46DF9C11E15}|teste{53EED3F4-6845-88EE-D1E4-C46DF9C11E15}|C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\requests.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
+      "RelativeMoniker": "D:0:0:{53EED3F4-6845-88EE-D1E4-C46DF9C11E15}|teste{53EED3F4-6845-88EE-D1E4-C46DF9C11E15}|solutionrelative:requests.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F312AF0-994C-3FCF-491A-7B403C939D9F}|ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj|c:\\users\\anapa\\onedrive - atec - academia de forma\u00E7\u00E3o\\zoutros\\ambiente de trabalho\\10792-apis\\projapi\\apianaforteprojetofinal\\apianaforteprojetofinal\\apianaforteprojetofinal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1F312AF0-994C-3FCF-491A-7B403C939D9F}|ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj|solutionrelative:apianaforteprojetofinal\\apianaforteprojetofinal.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F312AF0-994C-3FCF-491A-7B403C939D9F}|ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj|c:\\users\\anapa\\onedrive - atec - academia de forma\u00E7\u00E3o\\zoutros\\ambiente de trabalho\\10792-apis\\projapi\\apianaforteprojetofinal\\apianaforteprojetofinal\\dockerfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{1F312AF0-994C-3FCF-491A-7B403C939D9F}|ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj|solutionrelative:apianaforteprojetofinal\\dockerfile.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{60CA0214-88C6-8651-7B8B-6C0F6C5892CB}|Itens de Solu\u00E7\u00E3o{60CA0214-88C6-8651-7B8B-6C0F6C5892CB}|C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{60CA0214-88C6-8651-7B8B-6C0F6C5892CB}|Itens de Solu\u00E7\u00E3o{60CA0214-88C6-8651-7B8B-6C0F6C5892CB}|solutionrelative:README.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAiwEgAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-07-31T10:07:47.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "requests.http",
+              "DocumentMoniker": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\requests.http",
+              "RelativeDocumentMoniker": "requests.http",
+              "ToolTip": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\requests.http",
+              "RelativeToolTip": "requests.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2026-07-31T10:07:33.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApiAnaForteProjetoFinal.csproj",
+              "DocumentMoniker": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj",
+              "RelativeDocumentMoniker": "ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj",
+              "ToolTip": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj",
+              "RelativeToolTip": "ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-07-31T09:59:52.431Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Dockerfile.txt",
+              "DocumentMoniker": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal\\Dockerfile.txt",
+              "RelativeDocumentMoniker": "ApiAnaForteProjetoFinal\\Dockerfile.txt",
+              "ToolTip": "C:\\Users\\Anapa\\OneDrive - ATEC - Academia de Forma\u00E7\u00E3o\\zOutros\\Ambiente de Trabalho\\10792-APIs\\ProjAPI\\ApiAnaForteProjetoFinal\\ApiAnaForteProjetoFinal\\Dockerfile.txt",
+              "RelativeToolTip": "ApiAnaForteProjetoFinal\\Dockerfile.txt",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
+              "WhenOpened": "2026-07-31T10:05:40.193Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

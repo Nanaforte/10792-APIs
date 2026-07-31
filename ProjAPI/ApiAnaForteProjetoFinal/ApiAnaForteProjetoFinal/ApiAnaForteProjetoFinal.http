@@ -1,0 +1,6 @@
+@ApiAnaForteProjetoFinal_HostAddress = http://localhost:5159
+
+GET {{ApiAnaForteProjetoFinal_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

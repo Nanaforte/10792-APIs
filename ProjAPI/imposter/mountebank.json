@@ -1,0 +1,57 @@
+{
+  "imposters": [
+    {
+      "port": 4545,
+      "protocol": "http",
+      "name": "Serviço Externo de Livraria (Inventário e Pagamentos)",
+      "stubs": [
+        {
+          "predicates": [
+            {
+              "equals": {
+                "method": "GET",
+                "path": "/inventory/BOOK-123"
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": { "Content-Type": "application/json" },
+                "body": {
+                  "sku": "BOOK-123",
+                  "stockDisponivel": 42,
+                  "localizacaoArmazem": "Armazem-Lisboa"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "predicates": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/payments"
+              }
+            }
+          ],
+          "responses": [
+            {
+              "is": {
+                "statusCode": 200,
+                "headers": { "Content-Type": "application/json" },
+                "body": {
+                  "pagamentoId": "PAY-998877",
+                  "status": "APROVADO",
+                  "mensagem": "Pagamento efetuado com sucesso."
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

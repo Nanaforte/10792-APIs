@@ -1,0 +1,146 @@
+==================================================== Livraria Online (Bookstore) ====================================================
+
+Fluxo da app:
+
+    User/Cliente - Autentica-se na API e recebe um Token JWT para poder fazer as compras ou consultar
+
+    Produtos (Livros) - A API guarda e gere o livro do catálogo
+
+    Serviços externos, o mountebank
+        - Inventario - A API consulta o mountabenk para verificar o stock 
+        - Pagamentos - A API envia o pedido de pagamento para o mountebank
+
+    Polly Cache - Guarda em memória consultas repetidas de livros para não sobrecarregar a bd 
+
+    Retries e circuit braker - se o serviço de pagamentos ou o inventário falhar temporariamente, a polly tenta novamente (retry) ou abre o circuito (circuit breaker)
+
+
+
+
+Roadmap do projeto possivelmente:
+
+    1 - Explicar e orientar me dos conceitos de JWT e Polly
+    2 - Configurar o mountebank (importer de pagamentos e inventario)
+    3 - criar o projeto .net 8 no visual studio
+    4 - implementar a autenticacao JWT
+    5 - implementar a resiliencia e o polly cache
+    6 - controllers, swagger, testes (postman,code) e docker e readme
+
+
+
+
+
+
+==================================================== Conceitos ====================================================
+O que é JWT - json web token
+        é como se fosse um bilhete de identidade digital temporario.
+
+Como funciona:
+        o user envia o username e a password no endpoint
+        a API valida as credenciais. se tiverem corretas a API cria uma string codificada (o token) e devolve ao cliente
+        Em cada pedido (ex: comprar um livro) o cliente envia esse token no cabeçalho do http
+        A API le o token, verifica a assinatura e permite o acesso sem precisar de pedir password outra vez
+
+
+
+O que é Polly (cache, retries e circuit breaker)
+        
+        A polly cache: 
+                guarda repostas de consulta numa memoria temporaria. 
+                Ex: se pedir os detalhes do livro id 1 dez vezes, a polly responde logo na 1º tentativa e guarda a respostas
+                assim dessa 10 vezes devolve o dado mas sem ter de processar tudo
+
+        Retry: 
+                se o mountebank falhar a responder ao pedido de pagamento por algum problema de rede, a polly tenta fzr o pedido automaticamente 3 vezes antes de dar o erro ao user
+
+        Circuit breaker:
+                funciona como o quadro eletrico de uma casa. se o mountebank tiver constantemente com erro, tipo 5 falhas seguidas, o disjuntar abre. Durante esse tempo, a API nem sequer tenta entrar em contacto com o Mountebank - devolve logo uma mensagem ao user para n sobrecarregar o serviço
+
+
+
+
+
+
+
+
+PACOTES NUGET NO VISUAL STUDIO
+    Microsoft.AspNetCore.Authentication.JwtBearer 
+        (Para a segurança JWT)
+
+    Polly 
+        (Para resiliência)
+
+    Polly.Extensions.Http 
+        (Para políticas de retry e circuit breaker em chamadas HTTP)
+
+    Microsoft.Extensions.Caching.Memory 
+        (Para guardar cache em memória RAM)
+
+    Swashbuckle.AspNetCore 
+        (Já deve vir instalado, garante que está atualizado)
+
+
+
+POSSIVEL ESTRUTURA DE PASTAS
+    ApiAnaForteProjetoFinal
+        Controllers   ----------------------- onde ficam os endpoints 
+        Models   ---------------------------- as classes de dados
+        Services   -------------------------- logica de negocio e chamadas ao mountebank
+        Cache   ----------------------------- servicos de gestao da polly cache
+        Resilience   ------------------------ definicao das politicas polly - retry and circuit breaker
+
+
+
+
+
+
+
+
+Comentarios files visual studio
+
+
+appsettings.json
+    Secret - é a chave privada usada para assinar digitalmente os tokens
+    Issuer - Quem emite o token (a nossa API)
+    Audience - Quem vai consumir o token
+    ExpirationMinutes - o tempo de validade do token, neste caso um hora
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Introdução:
+
+O projeto consiste no desenvolvimento de uma REST API em .NET 8 para a gestão do catálogo de uma livraria online, integrando mecanismos de segurança, resiliência e serviços simulados.
+
+Autenticação com JWT:
+
+Foi implementada autenticação por JSON Web Tokens para proteger endpoints sensíveis. Ao fazer login com sucesso no endpoint /api/Auth/login, o cliente recebe um token assinado que deve ser incluído no cabeçalho Authorization: Bearer <token> dos pedidos subsequentes.
+
+Resiliência e Cache com Polly:
+
+Polly Cache: Guarda em memória RAM os detalhes dos livros durante 30 segundos para otimizar o tempo de resposta e evitar consultas redundantes.
+
+Retry Policy: Caso a comunicação HTTP com a API externa falhe temporariamente, a Polly executa até 3 tentativas automáticas com tempo de espera exponencial.
+
+Circuit Breaker: Se o serviço externo falhar continuadamente, o disjuntor abre por 15 segundos, bloqueando chamadas adicionais para evitar sobrecarga na rede.
+
+Imposter Mountebank:
+
+Utilizado para simular a API externa de verificação de stock (GET /inventory/:sku) e o gateway de pagamentos (POST /payments), permitindo testar cenários de sucesso e falha sem depender de serviços externos reais.

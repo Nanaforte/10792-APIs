@@ -1,0 +1,24 @@
+﻿# 1. Imagem base do runtime .NET 8 para execução
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+# 2. Imagem do SDK do .NET 8 para compilar a aplicação
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY ["ApiAnaForteProjetoFinal.csproj", "./"]
+RUN dotnet restore "ApiAnaForteProjetoFinal.csproj"
+COPY . .
+WORKDIR "/src/."
+RUN dotnet build "ApiAnaForteProjetoFinal.csproj" -c Release -o /app/build
+
+# 3. Publicação do projeto
+FROM build AS publish
+RUN dotnet publish "ApiAnaForteProjetoFinal.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+# 4. Construção da imagem final
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ApiAnaForteProjetoFinal.dll"]

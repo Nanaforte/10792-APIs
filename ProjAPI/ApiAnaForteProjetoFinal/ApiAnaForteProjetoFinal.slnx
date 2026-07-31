@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/teste/">
+    <File Path="requests.http" />
+  </Folder>
+  <Project Path="ApiAnaForteProjetoFinal/ApiAnaForteProjetoFinal.csproj" />
+</Solution>
