@@ -1,0 +1,88 @@
+#PREDICADOS
+#   metodo-GET
+#   path-/api/profile
+#   header Authorization = "Bearer validtoken" (exact match)
+#   preficado generico para ausencia ou token invalido
+
+#RESPOSTA
+#   token valido 200, body json perfil user
+#                   (username,email,etc)   
+#   sem token ou invalido - 403, body com error="forbidden"
+
+#teste - GET com header Authorization c token obtido no ex 12
+#   GET sem header ou token invalido
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex13",
+  "port": 2323,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": {
+              "username": "user1",
+              "email": "user1@gmail.com"
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "path": "/api/profile",
+            "method": "GET",
+            "headers": { "Authorization": "Bearer validtoken" }
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 403,
+            "headers": {"Content-Type": "application/json"},
+            "body": {
+              "error": "forbidden",
+              "msg": "acesso negado"
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "path": "/api/profile",
+            "method": "GET"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+
+#get com header Authorization c token correto
+GET http://localhost:2323/api/profile
+Authorization: Bearer validtoken
+
+###
+
+#get com token invalido
+GET http://localhost:2323/api/profile
+Authorization: Bearer token_errado
+
+###
+
+#get sem o header Authorization
+GET http://localhost:2323/api/profile

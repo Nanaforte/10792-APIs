@@ -1,0 +1,87 @@
+#PREDICADOS
+#metodo-post
+#path-/api/login
+#header- Content-Type":"application/json
+#body-deepEqual {"username"."admin","password"."secret"}
+
+#RESPOSTA
+#statuscode-200
+#header- Content-Type":"application/json
+#body-status="ok" e token="validtoken"
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"LOGIN",
+  "port": 1313,
+  "protocol":"http",
+  "stubs":[
+    {
+      "responses":[
+        {
+          "is":{
+            "statusCode":200,
+            "headers":{"Content-Type":"application/json"},
+            "body":{"status":"ok","token":"validtoken"}
+          }
+        }
+      ],
+      "predicates":[
+        {
+          "equals":{
+            "path":"/api/login",
+            "method":"POST",
+            "headers":{"Content-Type":"application/json"}
+          }
+        },
+        {
+          "deepEquals":{
+            "body":{
+              "username":"admin",
+              "password":"secret"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+
+
+POST http://localhost:1313/api/login
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password":"secret"
+}
+
+
+###
+
+
+POST http://localhost:1313/api/login
+Content-Type: application/json
+
+{
+    "password":"secret",
+    "username":"admin"
+}
+
+
+
+###
+
+
+POST http://localhost:1313/api/login
+Content-Type: application/json
+
+{
+    "password":   "secret",
+    "username":"admin"
+}
+

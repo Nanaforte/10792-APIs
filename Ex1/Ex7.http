@@ -1,0 +1,68 @@
+#PREDICADOS
+#   metodo-POST
+#   path-/api/users
+#   header-content-type=application/json
+#aplica-se quando o predicado de conflito nao corresponder
+
+#RESPOSTA
+#   statuscode-201
+#   Headers-Content-type=application/json --- c
+#   body- JSON com id, status="created" e msg de sucesso
+
+#TESTE - POST com nome, email diferente de exists@example.com e idd
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"CRIAR_USER",
+  "port": 1616,
+  "protocol":"http",
+  "stubs":[
+    {
+      "responses":[
+        {
+          "is":{
+            "statusCode":201,
+            "headers":{"Content-Type":"application/json",
+                        "Location":"/api/users/123"},
+            "body":{
+                "id":"123",
+                "status":"created",
+                "msg":"User criado com sucesso"
+            }
+          }
+        }
+      ],
+      "predicates":[
+        {
+          "equals":{
+            "path":"/api/users",
+            "method":"POST",
+            "headers":{"Content-Type":"application/json"}
+          }
+        },
+        {
+          "not":{
+            "equals":{
+                "body":{"email":"exists@example.com"}
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+
+POST http://localhost:1616/api/users
+Content-Type: application/json 
+
+{
+    "name":"Ana Forte",
+    "email":"ana@example.com",
+    "id":25
+}

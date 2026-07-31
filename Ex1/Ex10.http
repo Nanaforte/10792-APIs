@@ -1,0 +1,78 @@
+#PREDICADOS
+#   metodo - POST
+#   path-/api/tasks
+#   header - Content-Type = application/json
+#   body - "title":"dupicate"
+
+#RESPOSTA
+#   statuscode - 409
+#   header - application/json
+#   body - json com error = "duplicate_task"
+
+#TEST 
+#post - title "duplicate"
+#outro titulo
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex10",
+  "port": 2020,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "duplicate_taks"
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "path": "/api/tasks",
+            "method": "POST"
+          }
+        },
+        {
+          "contains": {
+            "body": {"title": "duplicate"}
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+
+#post c title - "duplicate"
+POST http://localhost:2020/api/tasks
+Content-Type: application/json
+
+{
+  "title": "duplicate",
+  "description": "duplicada"
+}
+
+###
+
+#outro título
+
+POST http://localhost:2020/api/tasks
+Content-Type: application/json
+
+{
+  "title": "mb",
+  "description": "exercicio"
+}

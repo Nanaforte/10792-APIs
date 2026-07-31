@@ -1,0 +1,37 @@
+# metodo - get
+#path - /api/marcas
+
+#repostas
+#statuscode - 200
+#header - Content-Type":"application/json
+#body array marcas
+
+post http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"marcas",
+  "port":123,
+  "protocol":"http",
+  "stubs":[{
+    "responses":[
+      {
+        "is":{
+          "statusCode":200,
+          "headers":{"Content-Type":"application/json"},
+          "body":{"marcas":["subaru","Audi","Ford","bmw","Honda"]}
+        }}
+    ],
+    "predicates":[{
+      "equals":{
+        "path":"/api/marcas",
+        "method":"GET"
+      }
+    }]
+  }]
+}
+
+
+###
+GET http://localhost:123/api/marcas
+Content-Type: application/json

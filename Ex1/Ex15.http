@@ -1,0 +1,49 @@
+# PREDICADOS
+#   metodo-GET
+#   aplica-se se nenhum stub anterior corresponder (fallback)
+
+# RESPOSTA
+#   statusCode-404
+#   body json com error="not_found"
+
+# teste-GET para um caminho n definido 404
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex15",
+  "port": 2626,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": {"Content-Type": "application/json"},
+            "body": {"error": "not_found"}
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+###
+
+#get para uma rota qualquer n definida 404
+GET http://localhost:2626/api/v1/usuarios
+
+###
+
+#ger para outro caminho aleatorio
+GET http://localhost:2626/produtos/detalhes/999

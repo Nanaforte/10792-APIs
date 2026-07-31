@@ -1,0 +1,196 @@
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "GestaoReservas",
+  "port": 3333,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 400,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"error": "data de checkout invalida, n pode ser anterior ao checkin"}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas", "method": "POST"}},
+        {"equals": {"body": {"checkout": "2026-06-15"}}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 409,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"error": "sem disponibilidade"}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas", "method": "POST"}},
+        {"equals": {"body": {"tipo_quarto": "suite presidencial"}}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 201,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"mensagem": "reserva criada com sucesso", "id": 103}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas", "method": "POST"}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": {"Content-Type": "application/json"},
+          "body": [
+            { "id": 1, "cliente": "ana", "checkin": "2026-07-20", "checkout": "2026-07-25", "tipo_quarto": "standard" },
+            { "id": 2, "cliente": "salvador", "checkin": "2026-05-01", "checkout": "2026-05-05", "tipo_quarto": "duplo" }
+          ]
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas", "method": "GET"}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 400,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"erro": "alteracao n permitida, prazo limite de 24h antes do checkin ultrapassado."}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas/2", "method": "PUT"}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"mensagem": "reserva altereda com sucesso"}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas/1", "method": "PUT"}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 400,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"erro": "n é permitido cancelar uma reserva apos a data de checkin."}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas/2", "method": "DELETE"}}
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": {"Content-Type": "application/json"},
+          "body": {"mensagem": "reserva cancelada com sucesso"}
+        }
+      }],
+      "predicates": [
+        {"equals": {"path": "/api/reservas/1", "method": "DELETE"}}
+      ]
+    }
+  ]
+}
+
+
+###
+
+#listar todas as reservas
+GET http://localhost:3333/api/reservas
+Content-Type: application/json
+
+
+###
+
+#criar reserva com checkout anterior ao Checkin (erro)
+POST http://localhost:3333/api/reservas
+Content-Type: application/json
+
+{
+  "cliente": "Bruno",
+  "checkin": "2026-06-20",
+  "checkout": "2026-06-15",
+  "tipo_quarto": "Standard"
+}
+
+
+###
+
+#criar reserva sem disponibilidade / quarto Cheio (erro 409)
+POST http://localhost:3333/api/reservas
+Content-Type: application/json
+
+{
+  "cliente": "Diana",
+  "checkin": "2026-07-01",
+  "checkout": "2026-07-05",
+  "tipo_quarto": "Suite Presidencial"
+}
+
+###
+
+#criar reserva com sucesso (dados corretos)
+POST http://localhost:3333/api/reservas
+Content-Type: application/json
+
+{
+  "cliente": "Diana",
+  "checkin": "2026-07-01",
+  "checkout": "2026-07-05",
+  "tipo_quarto": "Standard"
+}
+
+
+###
+
+#alterar reserva dentro do prazo (reserva 1 - checkin em julho)
+PUT http://localhost:3333/api/reservas/1
+Content-Type: application/json
+
+{
+  "tipo_quarto": "Duplo"
+}
+
+
+###
+
+#alterar reserva fora do prazo / menos de 24h (reserva 2)
+PUT http://localhost:3333/api/reservas/2
+Content-Type: application/json
+
+{
+  "tipo_quarto": "Standard"
+}
+
+
+###
+
+#cancelar reserva apos o checkin ter acontecido (reserva 2 - erro)
+DELETE http://localhost:3333/api/reservas/2
+Content-Type: application/json
+
+
+###
+
+#cancelar reserva antes do checkin (reserva 1 - sucesso)
+DELETE http://localhost:3333/api/reservas/1
+Content-Type: application/json

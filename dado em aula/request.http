@@ -1,0 +1,95 @@
+post http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "port": 4545,
+  "protocol": "http",
+  "stubs": [{
+    "responses": [
+      { "is": { "statusCode": 200 }}
+    ],
+    "predicates": [{
+      "and": [
+        {
+          "equals": {
+            "path": "/test",
+            "method": "POST",
+            "headers": { "Content-Type": "application/json" }
+          }
+        },
+        {
+          "not": {
+            "contains": { "body": "requiredField" },
+            "caseSensitive": true
+          }
+        }
+      ]
+    }]
+  }]
+}
+
+
+###
+
+post http://localhost:4545/test
+Content-Type: application/json
+
+{"optionalField": true}
+
+
+###
+
+
+post http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"API 2",
+  "port": 4546,
+  "protocol": "http",
+  "stubs": [{
+    "responses": [
+
+      { "is": { "statusCode": 200,
+                "body":{"Marca":"BMW",
+                        "Modelo":"M3"}
+       }
+    }
+    ],
+    "predicates": [{
+      "and": [
+        {
+          "equals": {
+            "path": "/test",
+            "method": "POST",
+            "headers": { "Content-Type": "application/json" }
+          }
+        },
+        {
+          "not": {
+            "contains": { "body": "requiredField" },
+            "caseSensitive": true
+          }
+        }
+      ]
+    }]
+  }]
+}
+
+
+###
+
+post http://localhost:4546/test
+Content-Type: application/json
+
+{"optionalField": true}
+
+
+###
+
+DELETE http://localhost:2525/imposters/4545
+
+
+###
+
+

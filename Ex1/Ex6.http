@@ -1,0 +1,72 @@
+#PREDICADOS
+#   metodo-POST
+#   path-/api/users
+#   header-Content-Type=application/json
+#   body-substring "email".exists@example.com (contains)
+
+#RESPOSTA
+#   statuscode-409
+#   Header-Content-Type=application/json
+#   body- Json c error="email_exists" e msg explicativa
+
+#TESTE- POST com JSON com "email"."exists@example.com"
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"EMAIL_DUPLICADO_CONFLITO",
+  "port": 1515,
+  "protocol":"http",
+  "stubs":[
+    {
+      "responses":[
+        {
+          "is":{
+            "statusCode":409,
+            "headers":{"Content-Type":"application/json"},
+            "body":{"error":"email_exists",
+                    "msg":"O email já está registado"}
+          }
+        }
+      ],
+      "predicates":[
+        {
+          "equals":{
+            "path":"/api/users",
+            "method":"POST",
+            "headers":{"Content-Type":"application/json"}
+          }
+        },
+        {
+          "contains":{
+            "body":"value"
+            }
+        }
+      ]
+    }
+  ]
+}
+
+## as barras no body no contains serve para as aspas serem vistas como parte do texto
+
+###
+
+
+POST http://localhost:1515/api/users
+Content-Type: application/json
+
+{
+    "username": "joao123",
+    "email": "exists@example.com"
+}
+
+
+POST http://localhost:1515/api/users
+Content-Type: application/json
+
+{
+    "username": "maria",
+    "email": "maria@example.com"
+}
+

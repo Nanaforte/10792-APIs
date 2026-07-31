@@ -1,0 +1,57 @@
+#metodo- get
+#path- /api/cars
+#querystring- brand:Toyota
+
+#respostas
+#statuscode-200
+#header- Content-Type":"application/json
+#body - brand:toyota -> results:id,modelo,preco
+
+
+post http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"APIcarros",
+  "port":4444,
+  "protocol":"http",
+  "stubs":[{
+    "responses":[
+      {
+        "is":{
+          "statusCode":200,
+          "headers":{"Content-Type":"application/json"},
+          "body":{"brand":"Toyota",
+                  "resultados":[
+                    {
+                        "id":1,
+                        "modelo":"corolla",
+                        "preco":20500
+                    }
+                  ]}
+        }
+        }
+    ],
+    "predicates":[{
+      "equals":{
+        "path":"/api/cars",
+        "method":"GET",
+        "query":{"brand":"Toyota"}
+      }
+    }]
+  }]
+}
+
+###
+
+
+GET http://localhost:4444/api/cars?brand=Toyota
+Content-Type: application/json
+
+
+###
+
+
+GET http://localhost:4444/api/cars
+Content-Type: application/json
+

@@ -1,0 +1,65 @@
+#PREDICADOS
+#   metodo-POST
+#   quando n existir um predicado anterior correspondente
+
+#RESPOSTA
+#   statusCode - 415
+#   body - json indicando q o Content-Type application/json obrigatorio
+
+#teste - POST para qualquer endpoint sem header Content-Type application/json
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex14",
+  "port": 2424,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 415,
+            "headers": {"Content-Type": "application/json"},
+            "body": {
+              "error": "Unsupported",
+              "message": "O header Content-Type: application/json é obrigatorio"
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST"
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+
+###
+
+#post sem o header Content-Type
+POST http://localhost:2424/api/profile
+
+{
+  "username": "user1",
+  "password": "pass1"
+}
+
+###
+
+# post com um Content-Type errado 
+POST http://localhost:2424/api/profile
+Content-Type: text/plain
+
+{
+  "username": "user1",
+  "password": "pass1"
+}

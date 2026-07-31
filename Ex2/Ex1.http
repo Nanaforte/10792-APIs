@@ -1,0 +1,218 @@
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "GestaoAlunos",
+  "port": 1111,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 400,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "error": "Idade mínima não atingida" }
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos", "method": "POST" } },
+        { "equals": { "body": { "idade": 8 } } } 
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "error": "Curso não encontrado" }
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos", "method": "POST" } },
+        { "contains": { "body": { "curso": "inexistente" } } } 
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 201,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "mensagem": "Aluno adicionado com sucesso", "id": 3 }
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos", "method": "POST" } }
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": [
+            { "id": 1, "nome": "joao", "idade": 12, "curso": "ti" },
+            { "id": 2, "nome": "maria", "idade": 15, "curso": "design" }
+          ]
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos", "method": "GET" } }
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "id": 1, "nome": "joao", "idade": 12, "curso": "ti" }
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos/1", "method": "GET" } }
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "mensagem": "Aluno 1 atualizado com sucesso" }
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos/1", "method": "PUT" } }
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 404,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "erro": "Aluno não existe" }
+          }
+        }
+      ],
+      "predicates": [
+        { "equals": { "path": "/api/alunos/2", "method": "PUT" } }
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 200,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "mensagem": "Aluno removido com sucesso" }
+        }
+      }],
+      "predicates": [
+        { "equals": { "path": "/api/alunos/1", "method": "DELETE", "headers": { "cargo": "Admin" } } }
+      ]
+    },
+    {
+      "responses": [{
+        "is": {
+          "statusCode": 403,
+          "headers": { "Content-Type": "application/json" },
+          "body": { "erro": "Acesso negado, apenas administradores" }
+        }
+      }],
+      "predicates": [
+        { "equals": { "method": "DELETE" } }
+      ]
+    }
+  ]
+}
+
+
+###
+
+
+#listar todos os alunos
+GET http://localhost:1111/api/alunos
+Content-Type: application/json
+
+
+###
+
+#mostrar um aluno especifico
+GET http://localhost:1111/api/alunos/1
+Content-Type: application/json
+
+
+###
+
+#criar aluno com idd menor q 10 (Erro)
+POST http://localhost:1111/api/alunos
+Content-Type: application/json
+
+{
+  "nome": "Pedro",
+  "idade": 8,
+  "curso": "ti"
+}
+
+
+###
+
+#criar aluno com curso inexistente (Erro)
+POST http://localhost:1111/api/alunos
+Content-Type: application/json
+
+{
+  "nome": "Ana",
+  "idade": 14,
+  "curso": "inexistente"
+}
+
+
+###
+
+#criar aluno com dados corretos (Sucesso)
+POST http://localhost:1111/api/alunos
+Content-Type: application/json
+
+{
+  "nome": "Carlos",
+  "idade": 12,
+  "curso": "ti"
+}
+
+
+###
+
+#atualizar aluno que existe (aluno 1)
+PUT http://localhost:1111/api/alunos/1
+Content-Type: application/json
+
+{
+  "nome": "joao",
+  "idade": 13,
+  "curso": "ti"
+}
+
+
+###
+
+#atualizar aluno que n existe (aluno 2)
+PUT http://localhost:1111/api/alunos/2
+Content-Type: application/json
+
+{
+  "nome": "maria",
+  "idade": 16,
+  "curso": "design"
+}
+
+###
+
+#apagar aluno sem ser Administrador (erro)
+DELETE http://localhost:1111/api/alunos/1
+Content-Type: application/json
+
+
+###
+
+#apagar aluno sendo administrador (Sucesso)
+DELETE http://localhost:1111/api/alunos/1
+Content-Type: application/json
+cargo: Admin

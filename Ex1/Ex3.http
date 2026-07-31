@@ -1,0 +1,40 @@
+#PREDICADO
+#metodo- get
+#path-/api/cars
+#query- qualquer uma q n encaixe no ex2
+
+#REPOSTA
+#statuscode- 200
+#header- Content-Type":"application/json
+#body- array vazio
+
+post http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"queryvazia",
+  "port":1212,
+  "protocol":"http",
+  "stubs":[{
+    "responses":[
+      {
+        "is":{
+          "statusCode":200,
+          "headers":{"Content-Type":"application/json"},
+          "body":{"arrayvazio":[]}
+        }}
+    ],
+    "predicates":[{
+      "equals":{
+        "path":"/api/cars",
+        "method":"GET"
+      }
+    }]
+  }]
+}
+
+
+###
+
+GET http://localhost:4444/api/cars
+Content-Type: application/json

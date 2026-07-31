@@ -1,0 +1,99 @@
+#PREDICADOS
+#   metodo-POST
+#   path-/api/auth
+#   body-deepEquals com {"username":"user1","password":"pass1"} parasucesso
+#   preficado generico para falha - quanon corresponder ao sucesso
+
+#RESPOSTA
+#   statusCode-200
+#   body token e expires_in
+#   falha: status 401, body error
+
+#teste - credenciais certas - verificar token e expires_in
+#   credenciais erradas -verificar status 401
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name": "Ex12",
+  "port": 2222,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": {
+              "token": "asfafasf",
+              "expires_in":3600
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "path": "/api/auth",
+            "method": "POST",
+            "headers": { "Content-Type": "application/json" }
+          }
+        },
+        {
+          "deepEquals": {
+            "body": {"username": "user1", "password":"pass1"}
+          }
+        }
+      ]
+    },
+    {
+      "responses": [
+        {
+          "is": {
+            "statusCode": 401,
+            "headers": {"Content-Type": "application/json"},
+            "body": {
+              "error": "error",
+              "msg":"credenciais invalidas"
+            }
+          }
+        }
+      ],
+      "predicates": [
+        {
+          "equals": {
+            "path": "/api/auth",
+            "method": "POST",
+            "headers": { "Content-Type": "application/json" }
+          }
+        }
+      ]  
+    }
+  ]
+}
+
+
+###
+
+#credenciais certas token e expires_in
+POST http://localhost:2222/api/auth
+Content-Type: application/json
+
+{
+  "username": "user1",
+  "password": "pass1"
+}
+
+###
+
+#credenciais erradas
+POST http://localhost:2222/api/auth
+Content-Type: application/json
+
+{
+  "username": "usererror",
+  "password": "passerror"
+}

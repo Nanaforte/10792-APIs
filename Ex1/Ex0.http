@@ -1,0 +1,15 @@
+### porta
+### protocolo- http
+
+post http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+    "port": 2020,   
+    "protocol": "http"
+}
+
+###
+
+GET http://localhost:2525/imposters/2020
+Content-Type: application/json

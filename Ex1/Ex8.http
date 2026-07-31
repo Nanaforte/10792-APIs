@@ -1,0 +1,80 @@
+#PREDICADOS
+#   metodo - POST
+#   path- /api/temperature
+#   header-Content-Type=application/json
+#   body- nao contem a string "value" (negation contains)
+
+#RESPOSTA
+#   statuscode-400
+#   header-Content-Type=application/json
+#   body-JSON com error="missing_field" e msg indicando q value é obrigatório
+
+#TESTE - POST sem campo value
+#test positivo - enviar com value
+
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"Ex8",
+  "port": 1818,
+  "protocol":"http",
+
+  "stubs":[
+    {
+      "responses":[
+        {
+          "is":{
+            "statusCode":400,
+            "headers":{"Content-Type":"application/json"},
+            "body":{
+                "error":"missing_field",
+                "msg":"O campo value é obrigatório"
+            }
+          }
+        }
+      ],
+      "predicates":[
+        {
+          "equals":{
+            "path":"/api/temperature",
+            "method":"POST",
+            "headers":{"Content-Type":"application/json"}
+          }
+        },
+        {
+          "exists":{
+            "body":{
+                "value":false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+
+
+POST http://localhost:1818/api/temperature
+Content-Type: application/json 
+
+{
+    "teste":"aaaaa"
+}
+
+###
+
+POST http://localhost:1818/api/temperature
+Content-Type: application/json 
+
+{
+    "teste":"aaaaa",
+    "value":2
+}
+
+
+

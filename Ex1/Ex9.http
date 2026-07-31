@@ -1,0 +1,104 @@
+#PREDICADOS
+#   metodo - POST
+#   path - /api/temperature
+#   header-Content-Type=application/json
+#   body - substring "value" (contains)
+
+#RESPOSTAS
+#   statuscode -201
+#   header-Content-Type=application/json
+#   body - JSON com status="created" e msg de sucesso
+
+#TESTE - POST com sensor_id e value númerico
+#      - enviar value inválido (string n numerico)
+
+POST http://localhost:2525/imposters
+Content-Type: application/json
+
+{
+  "name":"Ex9",
+  "port": 1919,
+  "protocol":"http",
+
+  "stubs":[
+    {
+      "responses":[
+        {
+          "is":{
+            "statusCode":201,
+            "headers":{"Content-Type":"application/json"},
+            "body":{"status":"error",
+                    "msg":"error: valor inválido"}
+          }
+        }
+      ],
+      "predicates":[
+        {
+          "equals":{
+            "path":"/api/temperature",
+            "method":"POST"
+          }
+        },
+        {
+          "contains":{"body": "value"}
+        },
+        {
+          "not":{
+            "contains":{"body":"23"}
+          }
+        }
+      ]
+    },
+    {
+      "responses":[
+        {
+          "is":{
+            "statusCode":201,
+            "headers":{"Content-Type": "application/json"},
+            "body":{
+              "status":"created",
+              "msg":"criado com sucesso"
+            }
+          }
+        }
+      ],
+      "predicates":[
+        {
+          "equals":{
+            "path":"/api/temperature",
+            "method":"POST"
+          }
+        },
+        {
+          "contains":{"body":"value"}
+        }
+      ]
+    }
+  ]
+}
+
+
+###
+#teste sucesso tem value 23
+POST http://localhost:1919/api/temperature
+Content-Type: application/json 
+
+{
+    "sensor_id": 123,
+    "value": 23
+}
+
+
+###
+
+#teste invalido tem value mas n 23 
+POST http://localhost:1919/api/temperature
+Content-Type: application/json 
+
+{
+    "sensor_id": 1,
+    "value": "vinte"
+}
+
+
+
